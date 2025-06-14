@@ -4,6 +4,7 @@ import connectDB from "./config/db.js"
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/authRoutes.js"
+import walletRoutes from "./routes/walletRoutes.js"
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/wallet", walletRoutes);
 
 app.get('/', (req,res)=>{
     res.json({message: "server is up and running"})
