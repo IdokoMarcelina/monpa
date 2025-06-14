@@ -16,12 +16,25 @@ connectDB();
 app.use(express.json());
 app.use(morgan("dev"));
 
-const corsOptions = {
-    origin: true,  
-    methods: "GET,POST,PUT,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-    credentials: true
-};
+
+const allowedOrigins = [
+    "http://localhost:5173",     // Vite dev
+    "https://monpa-webapp.vercel.app"  // your production frontend, update to real Vercel domain if needed
+  ];
+  
+  const corsOptions = {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  };
+  
 
 app.use(cors(corsOptions));
 
